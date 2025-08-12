@@ -1,7 +1,7 @@
 # React + TypeScript + Vite
 
 ## Favicon
-### Pulled image from https://imgbin.com/png/yHC1MFRD/emoji-poop-png. Image not used in sales or any other uses other than personal use
+ _Pulled image from https://imgbin.com/png/yHC1MFRD/emoji-poop-png. Image not used in sales or any other uses other than personal use_
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
