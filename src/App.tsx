@@ -1,23 +1,27 @@
 import { useStore } from './store'
 import { Link } from 'react-router-dom'
+import { averagePoopMinutes, averageTimeBetweenPoopsDHM } from './helper'
 import './App.css'
 
 function format(ms: number) {
   return new Date(ms).toLocaleString()
 }
+const state = useStore.getState();
 
 export default function App() {
-  const sessions = useStore(s => s.sessions)
-  const activeId = useStore(s => s.activeId)
-  const startPoop = useStore(s => s.startPoop)
-  const endPoop = useStore(s => s.endPoop)
+  const sessions = useStore(s => s.sessions);
+  const activeId = useStore(s => s.activeId);
+  const averageBetween = averageTimeBetweenPoopsDHM(sessions) ? averageTimeBetweenPoopsDHM(sessions) : "Not Available";
+  const average = averagePoopMinutes(sessions) ? averagePoopMinutes(sessions) + "minutes" : "Not Available";
+  const startPoop = useStore(s => s.startPoop);
+  const endPoop = useStore(s => s.endPoop);
 
-  const isActive = !!activeId
-  const START_OFFSET_MS = 120000
-
+  const isActive = !!activeId;
+  const START_OFFSET_MS = 120000;
+console.log("sessions", state.sessions, typeof(averageBetween));
   const handleClick = () => {
-    if (isActive) endPoop()
-    else startPoop()
+    if (isActive) endPoop();
+    else startPoop();
   }
 
   return (
@@ -34,7 +38,11 @@ export default function App() {
         >
           {isActive ? 'Stop' : 'Start'}
         </button>
+        <h3>Averge Poop Time</h3>
+        <p>{!average ? "" : average}</p>
 
+        <h3>Average Time Between Poops</h3>
+        <p>{averageBetween}</p>
         <div className="card">
           <h2>Poops</h2>
           {sessions.length ? (
