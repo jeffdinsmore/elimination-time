@@ -33,7 +33,7 @@ export default function SessionDetail() {
     )
   }
 
-  const START_OFFSET_MS = 120000
+  const START_OFFSET_MS = 0
   const mins = minutesFromSession(session)
 
   const handleDelete = () => {
