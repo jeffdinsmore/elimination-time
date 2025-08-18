@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import EditEnd from './EditEnd'
 import App from './App'
 import SessionDetail from './SessionDetail'
 
@@ -10,6 +11,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/session/:id" element={<SessionDetail />} />
+        <Route path="/session/:id/edit" element={<EditEnd />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

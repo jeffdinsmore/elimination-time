@@ -1,5 +1,6 @@
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useStore, type Session } from './store'
+import { useState } from 'react'
 import './App.css'
 
 function format(ms: number) {
@@ -12,11 +13,11 @@ function minutesFromSession(s: Session): number | null {
 }
 
 export default function SessionDetail() {
-  const { id } = useParams<{ id: string }>()
-  const navigate = useNavigate()
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
 
-  const session = useStore(state => state.sessions.find(s => s.id === id))
-  const deletePoop = useStore(s => s.deletePoop) // make sure you added this action earlier
+  const session = useStore(state => state.sessions.find(s => s.id === id));
+  const deletePoop = useStore(s => s.deletePoop); // make sure you added this action earlier
 
   if (!session) {
     return (
@@ -29,6 +30,7 @@ export default function SessionDetail() {
           </div>
         </main>
       </div>
+      
     )
   }
 
@@ -38,6 +40,10 @@ export default function SessionDetail() {
   const handleDelete = () => {
     deletePoop(session.id)
     navigate('/')
+  }
+
+  const handleEdit = () => {
+    navigate('/');
   }
 
   return (
@@ -62,9 +68,13 @@ export default function SessionDetail() {
               <span>{mins !== null ? `${mins} min` : '—'}</span>
             </div>
           </div>
+          <div className="detailActions">
+            
+          </div>
 
           <div className="detailActions">
             <button className="ghostBtn" onClick={() => navigate(-1)}>← Back</button>
+            <Link className="warningBtn" to={`/session/${session.id}/edit`}>Edit</Link>
             <button className="dangerBtn" onClick={handleDelete}>Delete</button>
           </div>
         </div>

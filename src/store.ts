@@ -14,6 +14,7 @@ type Store = {
   startPoop: () => void;
   endPoop: () => void;
   deletePoop: (id: string) => void;
+  setEndTime: (id: string, endMs: number | null) => void;
 };
 
 function format(ms: number) {
@@ -58,6 +59,16 @@ export const useStore = create<Store>()(
       deletePoop: (id: string) =>
         set((state) => ({
           sessions: state.sessions.filter((s) => s.id !== id),
+          activeId: state.activeId === id ? null : state.activeId,
+        })),
+
+      // 👇 NEW: set/clear end time
+      setEndTime: (id: string, endMs: number | null) =>
+        set((state) => ({
+          sessions: state.sessions.map((s) =>
+            s.id === id ? { ...s, end: endMs ?? undefined } : s
+          ),
+          // if we edited the active one, ensure it's no longer "active"
           activeId: state.activeId === id ? null : state.activeId,
         })),
     }),

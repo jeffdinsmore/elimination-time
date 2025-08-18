@@ -12,7 +12,7 @@ export default function App() {
   const sessions = useStore(s => s.sessions);
   const activeId = useStore(s => s.activeId);
   const averageBetween = averageTimeBetweenPoopsDHM(sessions) ? averageTimeBetweenPoopsDHM(sessions) : "Not Available";
-  const average = averagePoopMinutes(sessions) ? averagePoopMinutes(sessions) + "minutes" : "Not Available";
+  const average = averagePoopMinutes(sessions) ? averagePoopMinutes(sessions) + " minutes" : "Not Available";
   const startPoop = useStore(s => s.startPoop);
   const endPoop = useStore(s => s.endPoop);
 
