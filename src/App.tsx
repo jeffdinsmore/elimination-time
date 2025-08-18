@@ -17,7 +17,7 @@ export default function App() {
   const endPoop = useStore(s => s.endPoop);
 
   const isActive = !!activeId;
-  const START_OFFSET_MS = 120000;
+  const START_OFFSET_MS = 0;
 console.log("sessions", state.sessions, typeof(averageBetween));
   const handleClick = () => {
     if (isActive) endPoop();
