@@ -32,13 +32,13 @@ export const useStore = create<Store>()(
         if (get().activeId) return; // already running; ignore
         const id = String(Date.now());
         set({
-          sessions: [...get().sessions, { id, start: Date.now() + 60000 }],
+          sessions: [...get().sessions, { id, start: Date.now() }],
           activeId: id,
         });
         console.log(
           "start active Id",
           format(Number(id)),
-          format(Number(Date.now() + 60000))
+          format(Number(Date.now()))
         );
       },
 
