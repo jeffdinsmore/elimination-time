@@ -214,6 +214,18 @@ body {
   justify-content: space-between;
 }
 
+.warningBtn {
+  border: none;
+  background: var(--warning);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  text-decoration: none; /* for <a>/<Link> */
+}
+
 .ghostBtn {
   border: 1px solid var(--border);
   background: transparent;
@@ -222,6 +234,7 @@ body {
   border-radius: 12px;
   font-weight: 600;
   cursor: pointer;
+  text-decoration: none;
 }
 .dangerBtn {
   border: none;

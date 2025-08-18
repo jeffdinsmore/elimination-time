@@ -17,10 +17,6 @@ type Store = {
   setEndTime: (id: string, endMs: number | null) => void;
 };
 
-function format(ms: number) {
-  return new Date(ms).toLocaleString();
-}
-
 export const useStore = create<Store>()(
   persist(
     (set, get) => ({
@@ -35,11 +31,6 @@ export const useStore = create<Store>()(
           sessions: [...get().sessions, { id, start: Date.now() }],
           activeId: id,
         });
-        console.log(
-          "start active Id",
-          format(Number(id)),
-          format(Number(Date.now()))
-        );
       },
 
       // U: update current session with end time
@@ -52,7 +43,6 @@ export const useStore = create<Store>()(
           ),
           activeId: null,
         });
-        console.log("endPoop", format(Date.now() - 60000));
       },
 
       // in store.ts inside create(...)

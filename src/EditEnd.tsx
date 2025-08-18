@@ -3,6 +3,19 @@ import { useState, useEffect } from 'react'
 import { useStore } from './store'
 import './App.css'
 
+function format(ms: number) {
+    return new Date(ms).toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'numeric',   // 8/11/2025
+    day: 'numeric',
+    hour: 'numeric',    // 9
+    minute: '2-digit',  // 01
+    second: '2-digit',  // 29
+    hour12: true,       // 9:01:29 PM
+    timeZone: 'America/Los_Angeles', // optional: keeps it consistent
+  })
+}
+
 export default function EditEnd() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
@@ -13,7 +26,7 @@ export default function EditEnd() {
   const [endMs, setEndMs] = useState<string>('')
 
   useEffect(() => {
-    if (session) setEndMs(String(session.end ?? ''))
+    if (session) setEndMs(format(Number(session.end)) ?? '')
   }, [session])
 
   if (!session) {
@@ -30,8 +43,9 @@ export default function EditEnd() {
   }
 
   const save = () => {
-    const n = endMs === '' ? null : Number(endMs)
-    if (n !== null && Number.isNaN(n)) { alert('Enter a valid number (ms).'); return }
+    const input = endMs.trim();
+    const n = input === '' ? null : new Date(endMs).getTime();
+    if (n !== null && (Number.isNaN(n) || !Number.isFinite(n))) { alert('Enter a valid date/time in this format 8/11/2025, 8:59:29 PM'); return }
     if (n !== null && n < session.start) { alert('End cannot be before start.'); return }
     setEndTime(session.id, n)
     navigate(`/session/${session.id}`) // back to details
@@ -44,17 +58,17 @@ export default function EditEnd() {
         <div className="card">
           <div className="rows">
             <div className="row">
-              <span className="label">Start (ms)</span>
-              <span>{session.start}</span>
+              <span className="label">Start:</span>
+              <span>{format(session.start)}</span>
             </div>
             <div className="row" style={{ gap: 8, alignItems: 'center' }}>
-              <span className="label">End (ms)</span>
+              <span className="label">End:</span>
               <input
-                type="number"
+                type="text"
                 className="input"
                 value={endMs}
                 onChange={e => setEndMs(e.target.value)}
-                placeholder="end time in ms"
+                placeholder="e.g., 8/11/2025, 8:59:29 PM"
               />
             </div>
           </div>

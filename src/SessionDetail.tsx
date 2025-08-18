@@ -68,7 +68,7 @@ export default function SessionDetail() {
           </div>
 
           <div className="detailActions">
-            <button className="ghostBtn" onClick={() => navigate(-1)}>← Back</button>
+            <Link className="ghostBtn" to='/'>← Back</Link>
             <Link className="warningBtn" to={`/session/${session.id}/edit`}>Edit</Link>
             <button className="dangerBtn" onClick={handleDelete}>Delete</button>
           </div>
