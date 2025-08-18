@@ -1,6 +1,5 @@
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useStore, type Session } from './store'
-import { useState } from 'react'
 import './App.css'
 
 function format(ms: number) {
@@ -40,10 +39,6 @@ export default function SessionDetail() {
   const handleDelete = () => {
     deletePoop(session.id)
     navigate('/')
-  }
-
-  const handleEdit = () => {
-    navigate('/');
   }
 
   return (
