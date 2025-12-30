@@ -1,6 +1,11 @@
 import { useStore } from "./store";
 import { Link } from "react-router-dom";
-import { averagePoopMinutes, averageTimeBetweenPoopsDHM } from "./helper";
+import {
+  averagePoopMinutes,
+  averageTimeBetweenPoopsDHM,
+  sessionsToCSV,
+  downloadCSV,
+} from "./helper";
 import "./App.css";
 
 function format(ms: number) {
@@ -20,6 +25,12 @@ export default function App() {
   const endPoop = useStore((s) => s.endPoop);
 
   const isActive = !!activeId;
+
+  const exportCSV = () => {
+    const csv = sessionsToCSV(sessions, "en-US", "America/Los_Angeles"); // adjust locale/tz if you want
+    const fname = `poops-${new Date().toISOString().slice(0, 10)}.csv`;
+    downloadCSV(fname, csv);
+  };
 
   const handleClick = () => {
     if (isActive) endPoop();
@@ -64,6 +75,10 @@ export default function App() {
             <p className="muted">None saved yet.</p>
           )}
         </div>
+        <br></br>
+        <button className="exportBtn" onClick={exportCSV}>
+          Export CSV
+        </button>
       </main>
 
       <footer className="footer" />

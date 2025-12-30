@@ -39,7 +39,7 @@ export const useStore = create<Store>()(
         if (!activeId) return;
         set({
           sessions: sessions.map((s) =>
-            s.id === activeId ? { ...s, end: Date.now() - 60000 } : s
+            s.id === activeId ? { ...s, end: Date.now() } : s
           ),
           activeId: null,
         });
