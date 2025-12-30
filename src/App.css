@@ -295,6 +295,37 @@ body {
   box-shadow: var(--shadow);
 }
 
+.hourGrid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* compact on mobile */
+  gap: 8px 12px;
+  text-align: left;
+  font-size: clamp(14px, 2.5vw, 16px);
+}
+.hourGrid li {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 6px 10px;
+  background: var(--card);
+}
+.hourGrid .hour {
+  color: var(--muted);
+}
+.hourGrid .count {
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .hourGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 /* Keep the action button full-width on mobile, but fixed and centered on desktop */
 @media (min-width: 412px) {
   .primaryBtn {

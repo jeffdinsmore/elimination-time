@@ -106,3 +106,28 @@ export function downloadCSV(filename: string, csvText: string) {
   a.remove();
   URL.revokeObjectURL(url);
 }
+
+// Median session duration in minutes (completed sessions only). Returns null if none.
+export function medianPoopMinutes(sessions: Session[]): number | null {
+  const mins = sessions
+    .filter((s) => s.end && s.end > s.start)
+    .map((s) => (s.end! - s.start) / 60000)
+    .sort((a, b) => a - b);
+
+  if (mins.length === 0) return null;
+  const mid = Math.floor(mins.length / 2);
+  return mins.length % 2
+    ? Math.round(mins[mid])
+    : Math.round((mins[mid - 1] + mins[mid]) / 2);
+}
+
+// Count poops by hour-of-day (local), using START times only.
+// Returns an array of length 24 where index = hour (0..23).
+export function countPoopsByHour(sessions: Session[]): number[] {
+  const counts = new Array(24).fill(0);
+  for (const s of sessions) {
+    const h = new Date(s.start).getHours();
+    counts[h]++;
+  }
+  return counts;
+}

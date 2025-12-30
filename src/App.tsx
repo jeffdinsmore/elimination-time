@@ -5,6 +5,8 @@ import {
   averageTimeBetweenPoopsDHM,
   sessionsToCSV,
   downloadCSV,
+  medianPoopMinutes,
+  countPoopsByHour,
 } from "./helper";
 import "./App.css";
 
@@ -15,6 +17,8 @@ function format(ms: number) {
 export default function App() {
   const sessions = useStore((s) => s.sessions);
   const activeId = useStore((s) => s.activeId);
+  const medianMins = medianPoopMinutes(sessions);
+  const byHour = countPoopsByHour(sessions);
   const averageBetween = averageTimeBetweenPoopsDHM(sessions)
     ? averageTimeBetweenPoopsDHM(sessions)
     : "Not Available";
@@ -74,6 +78,31 @@ export default function App() {
           ) : (
             <p className="muted">None saved yet.</p>
           )}
+        </div>
+        <div className="card" style={{ marginTop: 12 }}>
+          <h2>Stats</h2>
+          <div className="rows">
+            <div className="row">
+              <span className="label">Median duration</span>
+              <span>{medianMins !== null ? `${medianMins} min` : "—"}</span>
+            </div>
+          </div>
+
+          <div style={{ marginTop: 12 }}>
+            <h3 style={{ margin: "0 0 8px", fontSize: "16px" }}>
+              Poops by Hour (start time)
+            </h3>
+            <ul className="hourGrid">
+              {byHour.map((count, hour) => (
+                <li key={hour}>
+                  <span className="hour">
+                    {hour.toString().padStart(2, "0")}:00
+                  </span>
+                  <span className="count">{count}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
         <br></br>
         <button className="exportBtn" onClick={exportCSV}>
